@@ -2,48 +2,56 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   FaChartLine,
   FaUserFriends,
-  FaTools,
   FaLaptop,
   FaCog,
   FaSignInAlt,
-  FaBook,
   FaBars,
   FaTimes,
   FaChevronDown,
 } from "react-icons/fa";
 
 export default function Navbar() {
-  const [openMenu, setOpenMenu] = useState(null);
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [openMenu, setOpenMenu] = useState(null);   // which dropdown is open
+  const [mobileOpen, setMobileOpen] = useState(false); // mobile menu open/close
+  const headerRef = useRef(null); // ✅ wrap header + mobile menu for outside-click
 
-  // Close mobile menu when clicking outside
+  // ✅ Close mobile menu when clicking outside the HEADER (includes nav + mobile menu)
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (mobileOpen && !event.target.closest('nav')) {
+    const handleOutside = (event) => {
+      if (
+        mobileOpen &&
+        headerRef.current &&
+        !headerRef.current.contains(event.target)
+      ) {
         setMobileOpen(false);
+        setOpenMenu(null);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleOutside);
+    document.addEventListener("touchstart", handleOutside, { passive: true });
+
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleOutside);
+      document.removeEventListener("touchstart", handleOutside);
     };
   }, [mobileOpen]);
 
-  // Close mobile menu on window resize
+  // ✅ Close mobile menu on window resize to desktop
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 768) {
+      if (window.innerWidth >= 1024) {
         setMobileOpen(false);
+        setOpenMenu(null);
       }
     };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const menuItems = [
@@ -51,51 +59,48 @@ export default function Navbar() {
       name: "Markets",
       icon: <FaChartLine />,
       submenu: [
-        "All Product", 
-        "Forex", 
-        "Stocks", 
-        "Crypto", 
-        "Indices", 
-        "Precious Metals", 
-        "Commodities"
+        "All Product",
+        "Forex",
+        "Stocks",
+        "Crypto",
+        "Indices",
+        "Precious Metals",
+        "Commodities",
       ],
     },
     {
       name: "Trading",
       icon: <FaLaptop />,
       submenu: [
-        "Account Types", 
-        "Trading Conditions", 
-        "Deposit Withdrawal", 
-        "Trading Hours", 
-        "Security", 
-        "Regulation"
+        "Account Types",
+        "Trading Conditions",
+        "Deposit Withdrawal",
+        "Trading Hours",
+        "Security",
+        "Regulation",
       ],
     },
-    
-   
     {
       name: "Partners",
       icon: <FaUserFriends />,
       link: "/partners",
     },
-    { 
-      name: "More", 
-      icon: <FaCog />, 
-      submenu: ["About Us", "Contact Us", "FAQ"] 
+    {
+      name: "More",
+      icon: <FaCog />,
+      submenu: ["About Us", "Contact Us", "FAQ"],
     },
   ];
 
   const handleMenuItemClick = (itemName) => {
-    if (openMenu === itemName) {
-      setOpenMenu(null);
-    } else {
-      setOpenMenu(itemName);
-    }
+    setOpenMenu((prev) => (prev === itemName ? null : itemName));
   };
 
   return (
-    <header className="w-full font-sans sticky top-0 bg-white shadow-md z-50 border-b border-gray-100">
+    <header
+      ref={headerRef}
+      className="w-full font-sans sticky top-0 bg-white shadow-md z-50 border-b border-gray-100"
+    >
       <nav className="flex justify-between items-center px-4 sm:px-6 md:px-8 lg:px-16 xl:px-20 py-3 max-w-7xl mx-auto">
         {/* Logo */}
         <div className="flex items-center">
@@ -121,31 +126,38 @@ export default function Navbar() {
               onMouseLeave={() => setOpenMenu(null)}
             >
               {item.link ? (
-                <Link 
-                  href={item.link} 
+                <Link
+                  href={item.link}
                   className="flex items-center space-x-2 px-4 py-2 rounded-lg hover:text-orange-600 hover:bg-orange-50 transition-all duration-200"
                 >
-                  {item.icon} 
+                  {item.icon}
                   <span>{item.name}</span>
                 </Link>
               ) : (
-                <button className="flex items-center space-x-2 px-4 py-2 rounded-lg hover:text-orange-600 hover:bg-orange-50 transition-all duration-200 group">
-                  {item.icon} 
+                <button
+                  type="button"
+                  className="flex items-center space-x-2 px-4 py-2 rounded-lg hover:text-orange-600 hover:bg-orange-50 transition-all duration-200 group"
+                >
+                  {item.icon}
                   <span>{item.name}</span>
                   {item.submenu && (
-                    <FaChevronDown className={`text-xs transition-transform duration-200 ${openMenu === item.name ? 'rotate-180' : ''}`} />
+                    <FaChevronDown
+                      className={`text-xs transition-transform duration-200 ${
+                        openMenu === item.name ? "rotate-180" : ""
+                      }`}
+                    />
                   )}
                 </button>
               )}
 
-              {/* Desktop Dropdown */}
+              {/* Desktop Dropdown (hover) */}
               {!item.link && item.submenu && openMenu === item.name && (
                 <div className="absolute left-0 mt-1 bg-white shadow-xl rounded-xl border border-gray-100 p-2 w-56 z-30 animate-fadeIn">
                   <ul className="space-y-1">
                     {item.submenu.map((subItem) => (
                       <li key={subItem}>
                         <Link
-                          href={`/${subItem.toLowerCase().replace(/\s+/g, '')}`}
+                          href={`/${subItem.toLowerCase().replace(/\s+/g, "")}`}
                           className="block px-4 py-3 text-sm text-gray-600 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-all duration-150"
                         >
                           {subItem}
@@ -158,7 +170,6 @@ export default function Navbar() {
             </li>
           ))}
         </ul>
-        
 
         {/* Right Buttons (Desktop) */}
         <div className="hidden lg:flex items-center space-x-3">
@@ -166,98 +177,130 @@ export default function Navbar() {
             href="/login"
             className="border-2 border-orange-500 text-orange-600 px-5 py-2.5 rounded-lg flex items-center space-x-2 hover:bg-orange-50 transition-all duration-200 font-medium"
           >
-            <FaSignInAlt className="text-sm" /> 
+            <FaSignInAlt className="text-sm" />
             <span>Login</span>
           </Link>
           <Link
             href="/register"
             className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-5 py-2.5 rounded-lg flex items-center space-x-2 hover:from-orange-600 hover:to-orange-700 transition-all duration-200 font-medium shadow-md hover:shadow-lg"
           >
-            <FaChartLine className="text-sm" /> 
+            <FaChartLine className="text-sm" />
             <span>Start Trading</span>
           </Link>
         </div>
 
         {/* Hamburger Button (Mobile & Tablet) */}
         <button
+          type="button"
           className="lg:hidden text-2xl text-gray-700 p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200"
-          onClick={() => setMobileOpen(!mobileOpen)}
+          onClick={() => {
+            setMobileOpen((s) => !s);
+            setOpenMenu(null);
+          }}
+          aria-expanded={mobileOpen}
           aria-label="Toggle mobile menu"
         >
           {mobileOpen ? <FaTimes /> : <FaBars />}
         </button>
       </nav>
 
-      {/* Mobile Menu Overlay */}
+      {/* ✅ Mobile Menu (inside the same header) */}
       {mobileOpen && (
-        <div className="lg:hidden fixed inset-0 top-[76px] bg-black bg-opacity-50 z-40">
-          <div className="bg-white w-full max-h-[calc(100vh-76px)] overflow-y-auto shadow-2xl">
-            <div className="p-6 space-y-4">
-              <ul className="space-y-3 font-medium text-gray-700">
-                {menuItems.map((item) => (
-                  <li key={item.name}>
-                    {item.link ? (
-                      <Link 
-                        href={item.link}
-                        className="flex items-center space-x-3 p-3 rounded-lg hover:bg-orange-50 hover:text-orange-600 transition-all duration-200"
-                        onClick={() => setMobileOpen(false)}
-                      >
-                        {item.icon} 
+        <div className="lg:hidden bg-white shadow-md border-t border-gray-100 animate-slideDown">
+          <ul className="flex flex-col p-4 space-y-2 overflow-y-auto max-h-[70vh]">
+            {menuItems.map((item) => (
+              <li key={item.name}>
+                {item.link ? (
+                  <Link
+                    href={item.link}
+                    className="flex items-center justify-between px-4 py-3 rounded-lg text-gray-700 hover:text-orange-600 hover:bg-orange-50 transition-all duration-200"
+                    onClick={() => {
+                      setMobileOpen(false);
+                      setOpenMenu(null);
+                    }}
+                  >
+                    <div className="flex items-center space-x-2">
+                      {item.icon}
+                      <span>{item.name}</span>
+                    </div>
+                  </Link>
+                ) : (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => handleMenuItemClick(item.name)}
+                      className="w-full flex items-center justify-between px-4 py-3 rounded-lg text-gray-700 hover:text-orange-600 hover:bg-orange-50 transition-all duration-200"
+                      aria-expanded={openMenu === item.name}
+                    >
+                      <div className="flex items-center space-x-2">
+                        {item.icon}
                         <span>{item.name}</span>
-                      </Link>
-                    ) : (
-                      <details className="group">
-                        <summary className="flex items-center justify-between p-3 cursor-pointer hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-all duration-200 list-none">
-                          <span className="flex items-center space-x-3">
-                            {item.icon} 
-                            <span>{item.name}</span>
-                          </span>
-                          <FaChevronDown className="text-xs transition-transform duration-200 group-open:rotate-180" />
-                        </summary>
+                      </div>
+                      {item.submenu && (
+                        <FaChevronDown
+                          className={`transition-transform duration-200 ${
+                            openMenu === item.name ? "rotate-180" : ""
+                          }`}
+                        />
+                      )}
+                    </button>
 
-                        {/* Mobile Submenu */}
-                        <div className="mt-2 ml-4 space-y-1">
-                          {item.submenu?.map((subItem) => (
+                    {/* ✅ Mobile Submenu (click se toggle) */}
+                    {item.submenu && openMenu === item.name && (
+                      <ul className="pl-10 pr-4 py-2 space-y-2">
+                        {item.submenu.map((subItem) => (
+                          <li key={subItem}>
                             <Link
-                              key={subItem}
-                              href={`/${subItem.toLowerCase().replace(/\s+/g, '-').replace('&', 'and')}`}
-                              className="block p-3 text-sm text-gray-600 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-all duration-150"
-                              onClick={() => setMobileOpen(false)}
+                              href={`/${subItem
+                                .toLowerCase()
+                                .replace(/\s+/g, "")}`}
+                              className="block px-3 py-2 text-sm text-gray-600 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-all duration-150"
+                              onClick={() => {
+                                setMobileOpen(false);
+                                setOpenMenu(null);
+                              }}
                             >
                               {subItem}
                             </Link>
-                          ))}
-                        </div>
-                      </details>
+                          </li>
+                        ))}
+                      </ul>
                     )}
-                  </li>
-                ))}
-              </ul>
+                  </>
+                )}
+              </li>
+            ))}
 
-              {/* Mobile Buttons */}
-              <div className="flex flex-col space-y-3 pt-6 border-t border-gray-200">
-                <Link
-                  href="/login"
-                  className="border-2 border-orange-500 text-orange-600 px-4 py-3 rounded-lg flex items-center space-x-2 justify-center hover:bg-orange-50 transition-all duration-200 font-medium"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  <FaSignInAlt /> 
-                  <span>Login</span>
-                </Link>
-                <Link
-                  href="/register"
-                  className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-4 py-3 rounded-lg flex items-center space-x-2 justify-center hover:from-orange-600 hover:to-orange-700 transition-all duration-200 font-medium shadow-md"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  <FaChartLine /> 
-                  <span>Start Trading</span>
-                </Link>
-              </div>
-            </div>
-          </div>
+            {/* Buttons (Mobile) */}
+            <li className="pt-4 border-t border-gray-200 flex flex-col gap-2">
+              <Link
+                href="/login"
+                className="border-2 border-orange-500 text-orange-600 px-5 py-2.5 rounded-lg flex items-center justify-center space-x-2 hover:bg-orange-50 transition-all duration-200 font-medium"
+                onClick={() => {
+                  setMobileOpen(false);
+                  setOpenMenu(null);
+                }}
+              >
+                <FaSignInAlt className="text-sm" />
+                <span>Login</span>
+              </Link>
+              <Link
+                href="/register"
+                className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-5 py-2.5 rounded-lg flex items-center justify-center space-x-2 hover:from-orange-600 hover:to-orange-700 transition-all duration-200 font-medium shadow-md hover:shadow-lg"
+                onClick={() => {
+                  setMobileOpen(false);
+                  setOpenMenu(null);
+                }}
+              >
+                <FaChartLine className="text-sm" />
+                <span>Start Trading</span>
+              </Link>
+            </li>
+          </ul>
         </div>
       )}
 
+      {/* Animations */}
       <style jsx>{`
         @keyframes fadeIn {
           from {
@@ -269,11 +312,9 @@ export default function Navbar() {
             transform: translateY(0);
           }
         }
-
         .animate-fadeIn {
           animation: fadeIn 0.2s ease-out;
         }
-
         @keyframes slideDown {
           from {
             opacity: 0;
@@ -284,27 +325,8 @@ export default function Navbar() {
             transform: translateY(0);
           }
         }
-
         .animate-slideDown {
           animation: slideDown 0.3s ease-out;
-        }
-
-        /* Custom scrollbar for mobile menu */
-        .overflow-y-auto::-webkit-scrollbar {
-          width: 4px;
-        }
-
-        .overflow-y-auto::-webkit-scrollbar-track {
-          background: #f1f1f1;
-        }
-
-        .overflow-y-auto::-webkit-scrollbar-thumb {
-          background: #ea580c;
-          border-radius: 2px;
-        }
-
-        .overflow-y-auto::-webkit-scrollbar-thumb:hover {
-          background: #dc2626;
         }
       `}</style>
     </header>
