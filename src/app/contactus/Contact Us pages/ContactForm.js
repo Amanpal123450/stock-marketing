@@ -97,7 +97,7 @@ export default function ContactForm() {
             Send Us a <span className="text-orange-500">Message</span>
           </h2>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto leading-relaxed">
-            Fill out the form below and we'll get back to you as soon as possible. Our team is here to help with any questions or concerns.
+            Fill out the form below and well get back to you as soon as possible. Our team is here to help with any questions or concerns.
           </p>
         </div>
 
