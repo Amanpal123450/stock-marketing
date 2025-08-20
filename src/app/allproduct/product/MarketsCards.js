@@ -88,38 +88,40 @@ export default function MarketsCards() {
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
         {cards.map((card, index) => (
           <div
-            key={index}
-            className="bg-white rounded-xl shadow-md p-8 flex flex-col justify-between"
-          >
-            {/* Icon */}
-            <div className={`w-12 h-12 flex items-center justify-center rounded-full ${card.color}`}>
-              {card.icon}
-            </div>
+  key={index}
+  className="bg-white rounded-xl shadow-md p-8 flex flex-col justify-between 
+             transition-transform duration-300 hover:scale-105 hover:shadow-xl"
+>
+  {/* Icon */}
+  <div className={`w-12 h-12 flex items-center justify-center rounded-full ${card.color}`}>
+    {card.icon}
+  </div>
 
-            {/* Title */}
-            <h3 className="text-xl font-bold mt-4">{card.title}</h3>
-            <p className="text-gray-500">{card.subtitle}</p>
+  {/* Title */}
+  <h3 className="text-xl font-bold mt-4">{card.title}</h3>
+  <p className="text-gray-500">{card.subtitle}</p>
 
-            {/* Description */}
-            <p className="mt-4 text-gray-600 text-sm">{card.desc}</p>
+  {/* Description */}
+  <p className="mt-4 text-gray-600 text-sm">{card.desc}</p>
 
-            {/* Details */}
-            <ul className="mt-6 space-y-2 text-sm">
-              {card.details.map((d, i) => (
-                <li key={i} className="flex justify-between">
-                  <span className="text-gray-600">{d.label}</span>
-                  <span className={d.highlight ? "text-orange-500 font-semibold" : "font-semibold"}>
-                    {d.value}
-                  </span>
-                </li>
-              ))}
-            </ul>
+  {/* Details */}
+  <ul className="mt-6 space-y-2 text-sm">
+    {card.details.map((d, i) => (
+      <li key={i} className="flex justify-between">
+        <span className="text-gray-600">{d.label}</span>
+        <span className={d.highlight ? "text-orange-500 font-semibold" : "font-semibold"}>
+          {d.value}
+        </span>
+      </li>
+    ))}
+  </ul>
 
-            {/* Button */}
-            <button className="mt-6 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg font-semibold transition">
-              {card.btn} →
-            </button>
-          </div>
+  {/* Button */}
+  <button className="mt-6 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg font-semibold transition">
+    {card.btn} →
+  </button>
+</div>
+
         ))}
       </div>
     </section>

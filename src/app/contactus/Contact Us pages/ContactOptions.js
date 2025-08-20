@@ -1,5 +1,6 @@
+"use client";
 export default function ContactOptions() {
-  const options = [
+const options = [
     {
       title: "Live Chat",
       description: "Instant support for urgent questions",
@@ -7,7 +8,7 @@ export default function ContactOptions() {
       cta: "Start Chat",
       icon: "💬",
       bg: "bg-gradient-to-b from-orange-400 to-orange-600 text-white",
-      buttonStyle: "bg-white text-orange-600 font-semibold",
+      buttonStyle: "bg-white text-orange-600 font-semibold hover:bg-gray-100 transition",
     },
     {
       title: "Email Support",
@@ -16,7 +17,7 @@ export default function ContactOptions() {
       cta: "Send Email Directly",
       icon: "✉️",
       bg: "bg-gray-50",
-      buttonStyle: "bg-orange-500 text-white font-semibold",
+      buttonStyle: "bg-orange-500 text-white font-semibold hover:bg-orange-600 transition",
     },
     {
       title: "Phone Support",
@@ -25,7 +26,7 @@ export default function ContactOptions() {
       cta: "Call Now",
       icon: "📞",
       bg: "bg-gray-50",
-      buttonStyle: "bg-orange-500 text-white font-semibold",
+      buttonStyle: "bg-orange-500 text-white font-semibold hover:bg-orange-600 transition",
     },
     {
       title: "WhatsApp",
@@ -34,7 +35,7 @@ export default function ContactOptions() {
       cta: "Message Us",
       icon: "📱",
       bg: "bg-gray-50",
-      buttonStyle: "bg-orange-500 text-white font-semibold",
+      buttonStyle: "bg-orange-500 text-white font-semibold hover:bg-orange-600 transition",
     },
   ];
 
@@ -52,7 +53,10 @@ export default function ContactOptions() {
           {options.map((option, idx) => (
             <div
               key={idx}
-              className={`rounded-xl p-6 flex flex-col items-center text-center shadow-sm ${option.bg}`}
+              className={`rounded-xl p-6 flex flex-col items-center text-center shadow-md ${option.bg} 
+                          hover:shadow-xl hover:scale-105 transform transition duration-300 ease-in-out
+                          animate-fadeIn`}
+              style={{ animationDelay: `${idx * 150}ms` }}
             >
               <div className="text-4xl mb-4">{option.icon}</div>
               <h3 className="text-lg font-bold mb-2">{option.title}</h3>
@@ -65,6 +69,16 @@ export default function ContactOptions() {
           ))}
         </div>
       </div>
+
+      <style jsx>{`
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.5s forwards;
+        }
+      `}</style>
     </section>
   );
 }

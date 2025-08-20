@@ -57,7 +57,7 @@ export default function PopularPlan() {
         {accounts.map((item, index) => (
           <div
             key={index}
-            className={`relative bg-white rounded-xl p-8 shadow-md border transition hover:shadow-lg flex flex-col items-center
+            className={`relative bg-white rounded-xl p-8 shadow-md border transition hover:shadow-2xl flex flex-col items-center
               ${item.highlight ? "border-orange-500" : "border-gray-200"}`}
           >
             {/* Most Popular Badge */}

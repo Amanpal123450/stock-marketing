@@ -39,9 +39,10 @@ export default function TradeGlobalMarkets() {
         {features.map((item, index) => (
           <div key={index} className="flex flex-col items-center">
             {/* Circle with Icon */}
-            <div className="w-20 h-20 flex items-center justify-center rounded-full bg-gradient-to-r from-orange-500 to-red-500 shadow-md">
-              {item.icon}
-            </div>
+            <div className="w-20 h-20 flex items-center justify-center rounded-full bg-gradient-to-r from-orange-500 to-red-500 shadow-md 
+                transition-transform duration-300 hover:scale-110 hover:shadow-lg hover:from-red-500 hover:to-orange-500">
+  {item.icon}
+</div>
             {/* Value */}
             <p className="text-orange-500 text-2xl font-bold mt-4">{item.value}</p>
             {/* Label */}

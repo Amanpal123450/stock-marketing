@@ -2,7 +2,7 @@
 
 export default function AccountTypePage() {
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center justify-start py-16 px-6">
+    <div className="bg-white flex flex-col items-center justify-start py-16 px-6">
       {/* Heading */}
       <h1 className="text-3xl md:text-4xl font-bold text-center text-gray-900">
         Find Your Perfect{" "}

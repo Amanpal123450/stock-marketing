@@ -40,12 +40,12 @@ export default function WhyChoose() {
           {features.map((feature, index) => (
             <div key={index} className="flex flex-col items-center text-center">
               {/* Icon */}
-              <div className="w-16 h-16 flex items-center justify-center rounded-full bg-gradient-to-r from-orange-500 to-red-500 shadow-lg">
+              <div className="w-16 h-16 flex items-center justify-center rounded-full bg-gradient-to-r from-orange-500 to-red-500 shadow-lg transition-transform duration-300 hover:scale-110 hover:shadow-lg hover:from-red-500 hover:to-orange-500">
                 {feature.icon}
               </div>
 
               {/* Title */}
-              <h3 className="mt-6 text-lg font-semibold text-gray-900">
+              <h3 className="mt-6 text-lg font-semibold text-gray-900 ">
                 {feature.title}
               </h3>
 

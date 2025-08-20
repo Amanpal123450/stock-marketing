@@ -62,37 +62,39 @@ export default function Testimonials() {
 
         {/* Reviews Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {reviews.map((review, idx) => (
-            <div
-              key={idx}
-              className="bg-gray-50 p-6 rounded-lg shadow-sm border-l-4 border-orange-500 text-left"
-            >
-              {/* Stars */}
-              <div className="flex items-center mb-3">
-                {Array.from({ length: review.rating }).map((_, i) => (
-                  <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
-                ))}
-                {review.rating < 5 &&
-                  Array.from({ length: 5 - review.rating }).map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-gray-300" />
-                  ))}
-                <span className="ml-2 text-gray-700 font-medium">{review.rating}.0</span>
-              </div>
+       {reviews.map((review, idx) => (
+  <div
+    key={idx}
+    className="bg-gray-50 p-6 rounded-lg shadow-sm border-l-4 border-orange-500 text-left 
+               hover:shadow-lg hover:scale-105 transform transition duration-300 ease-in-out"
+  >
+    {/* Stars */}
+    <div className="flex items-center mb-3">
+      {Array.from({ length: review.rating }).map((_, i) => (
+        <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+      ))}
+      {review.rating < 5 &&
+        Array.from({ length: 5 - review.rating }).map((_, i) => (
+          <Star key={i} className="w-5 h-5 text-gray-300" />
+        ))}
+      <span className="ml-2 text-gray-700 font-medium">{review.rating}.0</span>
+    </div>
 
-              {/* Review Text */}
-              <p className="text-gray-700 mb-4 text-sm">{review.text}</p>
+    {/* Review Text */}
+    <p className="text-gray-700 mb-4 text-sm">{review.text}</p>
 
-              {/* Divider */}
-              <hr className="my-3" />
+    {/* Divider */}
+    <hr className="my-3" />
 
-              {/* User Info */}
-              <div>
-                <p className="font-semibold">{review.name}</p>
-                <p className="text-gray-500 text-sm">{review.role}</p>
-                <p className="text-gray-400 text-xs">{review.verified}</p>
-              </div>
-            </div>
-          ))}
+    {/* User Info */}
+    <div>
+      <p className="font-semibold">{review.name}</p>
+      <p className="text-gray-500 text-sm">{review.role}</p>
+      <p className="text-gray-400 text-xs">{review.verified}</p>
+    </div>
+  </div>
+))}
+
         </div>
       </div>
     </section>

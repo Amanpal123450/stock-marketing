@@ -181,7 +181,7 @@ export default function Navbar() {
             <span>Login</span>
           </Link>
           <Link
-            href="/register"
+            href="/signup"
             className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-5 py-2.5 rounded-lg flex items-center space-x-2 hover:from-orange-600 hover:to-orange-700 transition-all duration-200 font-medium shadow-md hover:shadow-lg"
           >
             <FaChartLine className="text-sm" />
@@ -285,7 +285,7 @@ export default function Navbar() {
                 <span>Login</span>
               </Link>
               <Link
-                href="/register"
+                href="/signup"
                 className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-5 py-2.5 rounded-lg flex items-center justify-center space-x-2 hover:from-orange-600 hover:to-orange-700 transition-all duration-200 font-medium shadow-md hover:shadow-lg"
                 onClick={() => {
                   setMobileOpen(false);

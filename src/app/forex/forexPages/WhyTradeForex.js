@@ -42,7 +42,7 @@ export default function WhyTradeForex() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 max-w-6xl mx-auto px-6">
         {features.map((feature, index) => (
           <div key={index} className="flex flex-col items-center">
-            <div className="bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-full w-16 h-16 flex items-center justify-center mb-4 shadow-md">
+            <div className="bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-full w-16 h-16 flex items-center justify-center mb-4 shadow-md transition-transform duration-300 hover:scale-110 hover:shadow-lg hover:from-red-500 hover:to-orange-500">
               {feature.icon}
             </div>
             <h3 className="font-semibold text-lg text-gray-900 mb-2">{feature.title}</h3>

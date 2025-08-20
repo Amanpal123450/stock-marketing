@@ -36,7 +36,7 @@ export default function Steps() {
           {steps.map((step, idx) => (
             <div key={idx} className="flex flex-col items-center text-center">
               {/* Circle */}
-              <div className="w-18 h-18 flex items-center justify-center rounded-full bg-orange-500 text-white text-xl font-bold mb-4">
+              <div className="w-18 h-18 flex items-center justify-center rounded-full bg-orange-500 text-white text-xl font-bold mb-4  transition-all duration-300 transform hover:scale-110 hover:shadow-lg">
                 {step.number}
               </div>
               <h3 className="font-semibold text-lg mb-2">{step.title}</h3>

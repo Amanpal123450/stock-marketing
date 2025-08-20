@@ -46,29 +46,33 @@ export default function StockCategories() {
         <div className="grid md:grid-cols-3 gap-8">
           {categories.map((cat, idx) => (
             <div
-              key={idx}
-              className="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition"
-            >
-              {/* Icon */}
-              <div
-                className={`w-14 h-14 flex items-center justify-center rounded-full mx-auto ${cat.bgColor} mb-4`}
-              >
-                {cat.icon}
-              </div>
+  key={idx}
+  className="bg-white rounded-xl shadow-md p-6 text-center 
+             hover:shadow-2xl hover:scale-105 hover:border hover:border-orange-500
+             transition-all duration-300 ease-in-out cursor-pointer"
+>
+  {/* Icon */}
+  <div
+    className={`w-14 h-14 flex items-center justify-center rounded-full mx-auto ${cat.bgColor} mb-4 
+                transition-transform duration-300 group-hover:rotate-12`}
+  >
+    {cat.icon}
+  </div>
 
-              {/* Title */}
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                {cat.title}
-              </h3>
-              <p className="text-gray-600 text-sm mb-4">{cat.description}</p>
+  {/* Title */}
+  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+    {cat.title}
+  </h3>
+  <p className="text-gray-600 text-sm mb-4">{cat.description}</p>
 
-              {/* Stock List */}
-              <ul className="text-gray-700 text-sm space-y-1">
-                {cat.stocks.map((stock, i) => (
-                  <li key={i}>• {stock}</li>
-                ))}
-              </ul>
-            </div>
+  {/* Stock List */}
+  <ul className="text-gray-700 text-sm space-y-1">
+    {cat.stocks.map((stock, i) => (
+      <li key={i}>• {stock}</li>
+    ))}
+  </ul>
+</div>
+
           ))}
         </div>
       </div>

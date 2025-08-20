@@ -30,7 +30,7 @@ export default function MoneyManagementPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center py-16 px-6">
+    <div className="bg-white flex flex-col items-center py-16 px-6">
       {/* Heading */}
       <h1 className="text-4xl font-bold text-center mb-4">
         Seamless <span className="text-orange-500">Money Management</span>
@@ -48,10 +48,12 @@ export default function MoneyManagementPage() {
             className="flex flex-col items-center text-center space-y-4"
           >
             <div
-              className={`w-20 h-20 rounded-full flex items-center justify-center ${item.bg}`}
-            >
-              {item.icon}
-            </div>
+  className={`w-20 h-20 rounded-full flex items-center justify-center ${item.bg} 
+  transition-all duration-300 transform hover:scale-110 hover:shadow-xl hover:${item.bg}`}
+>
+  {item.icon}
+</div>
+
             <h3 className="font-bold text-lg">{item.title}</h3>
             <p className="text-gray-600 text-sm max-w-[200px]">{item.desc}</p>
           </div>
